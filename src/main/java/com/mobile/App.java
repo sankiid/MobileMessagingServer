@@ -1,6 +1,7 @@
 package com.mobile;
 
 import com.mobile.server.MessagingServer;
+import com.mobile.server.utils.Constant;
 import com.sun.corba.se.spi.activation.Server;
 
 /**
@@ -8,7 +9,7 @@ import com.sun.corba.se.spi.activation.Server;
  */
 public class App {
     public static void main(String[] args) {
-        MessagingServer messagingServer = new MessagingServer();
+        MessagingServer messagingServer = new MessagingServer(Constant.SERVER_PORT);
         messagingServer.start();
     }
 }
