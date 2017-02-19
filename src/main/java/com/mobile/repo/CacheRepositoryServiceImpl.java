@@ -1,8 +1,8 @@
 package com.mobile.repo;
 
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by sandeep on 16/2/17.
@@ -11,7 +11,7 @@ public class CacheRepositoryServiceImpl implements IRepositoryService {
 
     private volatile static CacheRepositoryServiceImpl service = null;
 
-    private static Map<String, Socket> cache = new HashMap<String, Socket>();
+    private static ConcurrentMap<String, Socket> cache = new ConcurrentHashMap<String, Socket>();
 
     public static CacheRepositoryServiceImpl getService() {
         if (service == null) {
@@ -29,7 +29,7 @@ public class CacheRepositoryServiceImpl implements IRepositoryService {
     }
 
     public void setConnection(String deviceId, Socket socket) {
-        cache.put(deviceId, socket);
+        cache.putIfAbsent(deviceId, socket);
     }
 
 }

@@ -18,6 +18,7 @@ public class MessagingServer {
     private ServerSocket serverSocket;
     private Socket socket;
     private volatile boolean stopped = false;
+
     private ExecutorService executorService = Executors.newFixedThreadPool(20, new ThreadFactory() {
         private AtomicInteger integer = new AtomicInteger(1);
 

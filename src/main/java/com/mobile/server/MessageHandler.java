@@ -24,16 +24,19 @@ public class MessageHandler implements Runnable {
 
     public void run() {
         try {
-            InputStream input = socket.getInputStream();
-            OutputStream output = socket.getOutputStream();
-            long time = System.currentTimeMillis();
-            output.write(String.valueOf(time).getBytes());
-            output.flush();
-            output.close();
-            input.close();
+            MessageRequest request = new MessageRequest(socket.getInputStream());
+            MessageResponse response = new MessageResponse(socket.getOutputStream());
+            while (!request.exit()) {
+                request.parseRequest();
+                long time = System.currentTimeMillis();
+                String message = String.valueOf(time + "\n");
+                response.write(message);
+//                Thread.sleep(10*1000);
+            }
+            request.close();
+            response.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
